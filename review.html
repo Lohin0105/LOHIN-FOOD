@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .star {
+      font-size: 30px;
+      cursor: pointer;
+      color: #ccc;
+    }
+    .star.selected {
+      color: #FFD700; /* Gold color for selected stars */
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .submit-button {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+      background-color: #45a049;
+    }
+    .remind-button {
+      width: 100%;
+      background-color: #FF9800;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+ }
+    .remind-button:hover {
+      background-color: #e68a00;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Rate Your Experience</h2>
+    <div class="star-rating" id="starRating">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div class="form-group">
+      <label for="comment">Leave a comment:</label>
+      <textarea id="comment" rows="4" placeholder="Your feedback..."></textarea>
+    </div>
+    <button class="submit-button" onclick="submitReview()">Submit Review</button>
+    <button class="remind-button" onclick="remindLater()">Remind Me Later</button>
+  </div>
+
+  <script>
+    let selectedRating = 0;
+
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', function() {
+        selectedRating = this.getAttribute('data-value');
+        updateStarRating();
+      });
+    });
+
+    function updateStarRating() {
+      document.querySelectorAll('.star').forEach(star => {
+        star.classList.remove('selected');
+      });
+      for (let i = 0; i < selectedRating; i++) {
+        document.querySelectorAll('.star')[i].classList.add('selected');
+      }
+    }
+
+    function submitReview() {
+      const comment = document.getElementById('comment').value;
+      if (selectedRating > 0 || comment.trim() !== "") {
+        // Here you can handle the review submission (e.g., send to server)
+        alert(`Thank you for your feedback!\nRating: ${selectedRating} stars\nComment: ${comment}`);
+        window.location.href = "menu.html"; // Redirect to menu.html after submission
+      } else {
+        alert("Please provide a rating or a comment.");
+      }
+    }
+
+    function remindLater() {
+      alert("We'll remind you later!");
+      window.location.href = "menu.html"; // Redirect to menu.html
+    }
+  </script>
+
+</body>
+</html>

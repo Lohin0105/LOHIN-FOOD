@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Page</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif, sans-serif;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: yellowgreen;
+      color: red;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .menu-container {
+      margin: 20px;
+      padding: 10px;
+    }
+    .menu-category {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin: 10px 0;
+      padding: 20px;
+    }
+    .menu-category h3 {
+      margin-bottom: 15px;
+    }
+
+    /* Dish item */
+    .menu-item {
+      display: flex;
+      align-items: flex-start;  /* Adjusted for better layout */
+      background-color: #f0f0f0;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    .menu-item:hover {
+      background-color: #ddd;
+    }
+
+    /* Image for each dish - increased size */
+    .menu-item img {
+      width: 250px;  /* Increased image size */
+      height: 250px;
+      border-radius: 10px;
+      margin-right: 20px;
+    }
+
+    /* Dish name, speciality, price details */
+    .menu-item-details {
+      flex: 1;
+    }
+    .dish-name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .dish-speciality {
+      color: white;
+      font-size: 20px;
+    }
+    .dish-price {
+      font-size: 50px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .menu-category button {
+      background-color: #4c4faf;
+      color: white;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 50%;  /* Adjusted width */
+      height: 2.5cm;  /* Adjusted height */
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .menu-category button:hover {
+      background-color: #45a049;
+    }
+
+    /* Hamburger Menu Styles */
+    .hamburger {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+    }
+
+    .menu-options {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 15px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .menu-options button {
+      width: 100%;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .menu-options button:hover {
+      background-color: #45a049;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
+    .modal button {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal button:hover {
+      background-color: #45a049;
+    }
+
+    /* Cart Modal Styles */
+    .cart-modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+    .cart-modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .checkout-button {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .checkout-button:hover {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>Welcome to Lohin's Food</h2>
+    <p>Here is the Menu with VEG and NON-VEG</p>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="menu-options" id="menuOptions">
+      <button onclick="viewCart()">View Cart</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="menu-container">
+    <!-- Veg Category -->
+    <div class="menu-category">
+      <h3>Veg Dishes</h3>
+      <div class="menu-item" id="aloomasala">
+        <img src="https://feastwithsafiya.com/wp-content/uploads/2021/10/Masala-potato-edited.jpg" alt="aloomasala">
+        <div class="menu-item-details">
+          <div class="dish-name">Aloomasala</div>
+          <div class="dish-speciality">A healthy, vegetarian delight!</div>
+          <div class="dish-price">₹83</div>
+        </div>
+        <button onclick="addToCart('Aloomasala', 'https://feastwithsafiya.com/wp-content/uploads/2021/10/Masala-potato-edited.jpg', 83)">Add to Cart</button>
+      </div>
+      <div class="menu-item" id="Paneer Masala">
+        <img src="https://www.cookwithmanali.com/wp-content/uploads/2019/05/Paneer-Butter-Masala.jpg" alt="Paneer Masala">
+        <div class="menu-item-details">
+          <div class="dish-name">Paneer Masala</div>
+          <div class="dish-speciality">A perfect dish for vegetarians!</div>
+          <div class="dish-price">₹170</div>
+        </div>
+        <button onclick="addToCart('Paneer Masala', 'https://www.cookwithmanali.com/wp-content/uploads/2019/05/Paneer-Butter-Masala.jpg', 170)">Add to Cart</button>
+      </div>
+      <div class="menu-item" id="Mushroom curry">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjV9dLSXICrn7RB897WzJ_IbHlxJaMsiO8ss_ad3sQ5wduzQsCHZg_dXyc4_J2pYyEdhjlzBSpV0JAfu2WwJZ_rs9ADuh_bTznXxld1bAMI3OLGVDouaQcBYauLNK4Ym1_Y5_bf12woVc4/s640/Musgroom+gravy+recipe.JPG" alt="Mushroom curry">
+        <div class="menu-item-details">
+          <div class="dish-name">Mushroom Curry</div>
+          <div class="dish-speciality">Crispy, crunchy, and full of flavor!</div>
+          <div class="dish-price">₹180</div>
+        </div>
+        <button onclick="addToCart('Mushroom curry', 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjV9dLSXICrn7RB897WzJ_IbHlxJaMsiO8ss_ad3sQ5wduzQsCHZg_dXyc4_J2pYyEdhjlzBSpV0JAfu2WwJZ_rs9ADuh_bTznXxld1bAMI3OLGVDouaQcBYauLNK4Ym1_Y5_bf12woVc4/s640/Musgroom+gravy+recipe.JPG', 180)">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Non-Veg Category -->
+    <div class="menu-category">
+      <h3>Non-Veg Dishes</h3>
+      <div class="menu-item" id="chicken masala">
+        <img src="https://img-global.cpcdn.com/recipes/cde0f5d52a23368e/1360x1928cq70/hyderabadi-chicken-masala-recipe-main-photo.webp" alt="chicken masala">
+        <div class="menu-item-details">
+          <div class="dish-name">Chicken Masala</div>
+          <div class="dish-speciality">For lovers of spicy chicken!</div>
+          <div class="dish-price">₹250</div>
+        </div>
+        <button onclick="addToCart('Chicken Masala', 'https://img-global.cpcdn.com/recipes/cde0f5d52a23368e/1360x1928cq70/hyderabadi-chicken-masala-recipe-main-photo.webp', 250)">Add to Cart</button>
+      </div>
+      <div class="menu-item" id="chicken 65">
+        <img src="https://www.teaforturmeric.com/wp-content/uploads/2024/05/Chicken-65-11-1024x1536.jpg" alt="chicken 65">
+        <div class="menu-item-details">
+          <div class="dish-name">Chicken 65</div>
+          <div class="dish-speciality">Succulent, tender chicken!</div>
+          <div class="dish-price">₹180</div>
+        </div>
+        <button onclick="addToCart('Chicken 65', 'https://www.teaforturmeric.com/wp-content/uploads/2024/05/Chicken-65-11-1024x1536.jpg', 180)">Add to Cart</button>
+      </div>
+      <div class="menu-item" id="Tandoori">
+        <img src="https://palatesdesire.com/wp-content/uploads/2021/11/Tandoori-Chicken@palates-desire.jpg" alt="Tandoori">
+        <div class="menu-item-details">
+          <div class="dish-name">Tandoori</div>
+          <div class="dish-speciality">Flavorful grilled chicken!</div>
+          <div class="dish-price">₹450</div>
+        </div>
+        <button onclick="addToCart('Tandoori', 'https://palatesdesire.com/wp-content/uploads/2021/11/Tandoori-Chicken@palates-desire.jpg', 450)">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-modal-content">
+      <h3>Your Cart</h3>
+      <div id="cartItems"></div>
+      <button class="checkout-button" onclick="checkout()">Checkout</button>
+      <button class="checkout-button" onclick="closeCart()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+
+    // Add item to the cart
+    function addToCart(name, image, priceINR) {
+      cart.push({ name, image, priceINR }); // Use priceINR directly
+      if (cart.length > 100) {
+        cart.shift(); // Keep only the last 100 items
+      }
+      alert(name + " added to cart!");
+    }
+
+    // View Cart
+    function viewCart() {
+      const cartModal = document.getElementById("cartModal");
+      const cartItemsDiv = document.getElementById("cartItems");
+      cartItemsDiv.innerHTML = ""; // Clear previous items
+
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = "<p>Your cart is empty!</p>";
+      } else {
+        cart.forEach(item => {
+          cartItemsDiv.innerHTML += `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}">
+              <div>
+                <div class="dish-name">${item.name}</div>
+                <div class="dish-price">₹${item.priceINR}</div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      cartModal.style.display = "block"; // Show the cart modal
+    }
+
+    // Close Cart Modal
+    function closeCart() {
+      document.getElementById("cartModal").style.display = "none";
+    }
+
+    // Checkout function
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        // Save cart to localStorage for the payment page
+        localStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "payment.html"; // Redirect to payment page
+      }
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      window.location.href = "login.html"; // Redirect to login page after logout
+    }
+
+    // Toggle Menu
+    function toggleMenu() {
+      const menuOptions = document.getElementById("menuOptions");
+      menuOptions.style.display = menuOptions.style.display === "block" ? "none" : "block";
+    }
+
+    // Check if user is logged in
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.href = "index.html"; // Redirect to login page if not logged in
+    }
+  </script>
+
+</body>
+</html>

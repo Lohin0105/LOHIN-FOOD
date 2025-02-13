@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipping Address</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .address-box {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .submit-button {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+      background-color: #45a049;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Shipping Address</h2>
+
+    <div class="address-box" id="savedAddressBox">
+      <h3>Saved Address</h3>
+      <div id="savedAddress"></div>
+    </div>
+
+    <button class="submit-button" onclick="proceedWithAddress()">Continue with this Address</button>
+    <button class="submit-button" onclick="showAddressForm()">Add New Address</button>
+
+    <div id="addressForm" class="hidden">
+      <h3>Add New Address</h3>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact Number:</label>
+        <input type="text" id="contact" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="houseNo">House No:</label>
+        <input type="text" id="houseNo" required>
+      </div>
+      <div class="form-group">
+        <label for="street">Street:</label>
+        <input type="text" id="street" required>
+      </div>
+      <div class="form-group">
+        <label for="area">Area:</label>
+        <input type="text" id="area" required>
+      </div>
+      <div class="form-group">
+        <label for="village">Village/Town:</label>
+        <input type="text" id="village" required>
+      </div>
+      <div class="form-group">
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" required>
+      </div>
+      <button class="submit-button" onclick="saveAddress()">Save Address</button>
+      <button class="submit-button" onclick="hideAddressForm()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve saved address from localStorage
+    const address = JSON.parse(localStorage.getItem("shippingAddress"));
+
+    // Display saved address if it exists
+    const savedAddressDiv = document.getElementById("savedAddress");
+    if (address) {
+      displayAddress(address);
+    } else {
+      savedAddressDiv.innerHTML = "<p>No saved address found.</p>";
+    }
+
+    function displayAddress(address) {
+      savedAddressDiv.innerHTML = `
+        <strong>Name:</strong> ${address.name}<br>
+        <strong>Contact Number:</strong> ${address.contact}<br>
+        <strong>Email:</strong> ${address.email}<br>
+        <strong>House No:</strong> ${address.houseNo}<br <strong>Street:</strong> ${address.street}<br>
+        <strong>Area:</strong> ${address.area}<br>
+        <strong>Village/Town:</strong> ${address.village}<br>
+        <strong>Pincode:</strong> ${address.pincode}
+      `;
+    }
+
+    function proceedWithAddress() {
+      if (address) {
+        window.location.href = "paymentMethods.html"; 
+      } else {
+        alert("No address found. Please add a new address.");
+      }
+    }
+
+    function showAddressForm() {
+      document.getElementById("addressForm").classList.remove("hidden");
+    }
+
+    function hideAddressForm() {
+      document.getElementById("addressForm").classList.add("hidden");
+    }
+
+    function saveAddress() {
+      const newAddress = {
+        name: document.getElementById("name").value,
+        contact: document.getElementById("contact").value,
+        email: document.getElementById("email").value,
+        houseNo: document.getElementById("houseNo").value,
+        street: document.getElementById("street").value,
+        area: document.getElementById("area").value,
+        village: document.getElementById("village").value,
+        pincode: document.getElementById("pincode").value
+      };
+
+      localStorage.setItem("shippingAddress", JSON.stringify(newAddress));
+      displayAddress(newAddress);
+      hideAddressForm();
+    }
+  </script>
+
+</body>
+</html>
