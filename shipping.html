@@ -128,7 +128,8 @@
         <strong>Name:</strong> ${address.name}<br>
         <strong>Contact Number:</strong> ${address.contact}<br>
         <strong>Email:</strong> ${address.email}<br>
-        <strong>House No:</strong> ${address.houseNo}<br <strong>Street:</strong> ${address.street}<br>
+        <strong>House No:</strong> ${address.houseNo}<br>
+        <strong>Street:</strong> ${address.street}<br>
         <strong>Area:</strong> ${address.area}<br>
         <strong>Village/Town:</strong> ${address.village}<br>
         <strong>Pincode:</strong> ${address.pincode}
@@ -136,22 +137,30 @@
     }
 
     function proceedWithAddress() {
+      // Ensure the address exists in localStorage before proceeding
+      const address = JSON.parse(localStorage.getItem("shippingAddress"));
+
       if (address) {
+        // If the address exists, redirect to the payment page
         window.location.href = "paymentMethods.html"; 
       } else {
+        // If no address exists, prompt the user to add one
         alert("No address found. Please add a new address.");
       }
     }
 
     function showAddressForm() {
+      // Display the address form to allow the user to add a new address
       document.getElementById("addressForm").classList.remove("hidden");
     }
 
     function hideAddressForm() {
+      // Hide the address form if the user decides to cancel
       document.getElementById("addressForm").classList.add("hidden");
     }
 
     function saveAddress() {
+      // Save the new address entered by the user
       const newAddress = {
         name: document.getElementById("name").value,
         contact: document.getElementById("contact").value,
@@ -163,8 +172,13 @@
         pincode: document.getElementById("pincode").value
       };
 
+      // Store the new address in localStorage
       localStorage.setItem("shippingAddress", JSON.stringify(newAddress));
+
+      // Display the saved address
       displayAddress(newAddress);
+
+      // Hide the address form after saving
       hideAddressForm();
     }
   </script>
